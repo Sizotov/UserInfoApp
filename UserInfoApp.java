@@ -5,13 +5,16 @@ import java.util.Date;
 
 public class UserInfoApp {
     public static void main(String[] args) {
+        WriteFile writeFile = new WriteFile();
+        String newFileName;
+
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите данные (в формате: фамилия имя отчество дата_рождения номер_телефона пол ): ");
+        System.out.println("Введите данные (в формате: фамилия имя отчество датарождения номер телефона пол): ");
         String input = scanner.nextLine();
 
         try {
             String[] data = input.split(" ");
-            if (data.length != 5) {
+            if (data.length != 6) {
                 throw new IllegalArgumentException("Количество данных не соответствует требуемому");
             }
             String lastName = data[0];
@@ -27,6 +30,16 @@ public class UserInfoApp {
             System.out.println("Дата рождения" + formatDate(dateOfBirth));
             System.out.println("Номер телефона" + phoneNumber);
             System.out.println("Пол" + gender);
+
+            newFileName = ("lastName") + ".txt";
+            StringBuilder sb = new StringBuilder();
+            for (String str : data) {
+                sb.append(str);
+                sb.append(" ");
+            }
+            System.out.println(sb);
+            String filePath = newFileName;
+            writeFile.writeData(sb.toString(), filePath);
 
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка: " + e.getMessage());
@@ -44,5 +57,7 @@ public class UserInfoApp {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
         return format.format(date);
     }
+
+
 }
 
